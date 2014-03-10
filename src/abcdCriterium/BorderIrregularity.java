@@ -1,40 +1,61 @@
 package abcdCriterium;
 
-import imagePrep.ImageRotation;
+import java.util.ArrayList;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
+import utils.Point;
 
 public class BorderIrregularity {
 	
-	public static void main(String[] args) {
-		File file = new File("mole2.jpeg");
-		BorderIrregularity border = new BorderIrregularity();
-		border.EdgeDetector(file);
+	private ArrayList<Point> points;
+	private Point centroid;
+	private double meanRadius;
+	
+	public double returnIrregularityMetric(ArrayList<Point> border) {
+		this.points = border;
+		findCentroid();
+		findMeanRadius();
+		return radiiStandardDeviation();
 	}
 	
-	private void EdgeDetector(File image) {
-		CannyEdgeDetector detector = new CannyEdgeDetector();
-		detector.setLowThreshold(2f);
-		detector.setHighThreshold(9.5f);
-		try {
-			detector.setSourceImage(ImageIO.read(image));
-		} catch (IOException e) {
-			System.out.println("Image not found.");
-			e.printStackTrace();
+	public void findCentroid() {
+		int xMean = 0;
+		int yMean = 0;
+		for(int i=0; i<points.size(); i++) {
+			xMean += points.get(i).getX();
+			yMean += points.get(i).getY();
 		}
-		detector.process();
-		BufferedImage edges = detector.getEdgesImage();
-		File processed = new File("Mole2-L2-H9.5.png");
-		try {
-			ImageIO.write(edges, "png", processed);
-		} catch (IOException e) {
-			System.out.println("Unable to save image.");
-			e.printStackTrace();
-		}
+		xMean = xMean/points.size();
+		yMean = yMean/points.size();
+		centroid = new Point(xMean, yMean);
+		System.out.println("Centroid coord: " + xMean + " " + yMean);
 	}
-
+	
+	public void findMeanRadius() {
+		int x = 0;
+		int y = 0;
+		double sumRadius = 0;
+		for(int i=0; i<points.size(); i++) {
+			x = points.get(i).getX();
+			y = points.get(i).getY();
+			sumRadius += Math.sqrt( Math.pow(x - centroid.getX(), 2) + Math.pow(y - centroid.getY(), 2)); 
+		}
+		meanRadius = sumRadius/points.size();
+		System.out.println(meanRadius);
+	}
+	
+	public double radiiStandardDeviation() {
+		int x = 0;
+		int y = 0;
+		double distance;
+		double variance = 0;
+		for(int i=0; i<points.size(); i++) {
+			x = points.get(i).getX();
+			y = points.get(i).getY();
+			distance = (float) Math.sqrt( Math.pow(x - centroid.getX(), 2) + Math.pow(y - centroid.getY(), 2)); 
+			variance += Math.pow((distance - meanRadius), 2);
+		}
+		variance = variance/points.size();
+		return Math.sqrt(variance);
+	}
+	
 }
