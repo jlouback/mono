@@ -10,12 +10,12 @@ import javax.imageio.ImageIO;
 public class ImageRotation {
 	
 	public static void main(String[] args) {
-		File file = new File("1.jpg");
-		ImageRotation img = new ImageRotation();
-		img.processSingleImage(file, 45);
+		File file = new File("0010.png");
+		processSingleImage(file, 30);
+		
 	}
 
-	private void processSingleImage(File image, int degrees) {
+	private static void processSingleImage(File image, int degrees) {
 		
 		int rotations = 360/degrees;
 		int angle = degrees;
@@ -37,7 +37,7 @@ public class ImageRotation {
 		
 	}
 	
-	private BufferedImage rotateImage(File sourceImage, int degrees) {
+	private static BufferedImage rotateImage(File sourceImage, int degrees) {
 
 		BufferedImage bufferedSource = null;
 		try {

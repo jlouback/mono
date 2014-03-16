@@ -1,4 +1,4 @@
-package utils;
+package foreignContributions;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.ceil;
@@ -41,7 +41,7 @@ public class SymmetryDetector {
         AffineTransform identity = new AffineTransform();
         g.setTransform(identity);
         g.setColor(Color.BLACK);
-        Font font = Font.decode("Arial-BOLD-18");
+        Font font = Font.decode("Arial-BOLD-12");
         GlyphVector vector = font.createGlyphVector(g.getFontRenderContext(), string);
         Shape shape = vector.getOutline();
         g.setStroke(new BasicStroke(3));
@@ -405,7 +405,10 @@ public class SymmetryDetector {
         	y = drawString(observation, String.format("Max Radius: %3.1f", maxRadius), 5, y);
         	y = drawString(observation, String.format("Threshold: %1.2f", scoreThreshold), 5, y);
         	y = drawString(observation, String.format("Radii: %d", radiusCount), 5, y);
-        	drawString(observation, "Symmetry: " + symmetry.toString(), 5, height-25);
+        	//TO fit in image
+        	String[] strings = symmetry.toString().split("\\[");
+        	String symmetry1 = strings[0];
+        	drawString(observation, "Symmetry: " + symmetry1, 5, height-25);
         }
         
 		return symmetry;

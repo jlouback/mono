@@ -1,9 +1,11 @@
-package utils;
+package foreignContributions;
 
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import utils.Point;
 
 /**
  * <p><em>This software has been released into the public domain.

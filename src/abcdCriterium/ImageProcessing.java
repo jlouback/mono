@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import utils.CannyEdgeDetector;
+import foreignContributions.CannyEdgeDetector;
 import utils.Point;
 
 public class ImageProcessing {

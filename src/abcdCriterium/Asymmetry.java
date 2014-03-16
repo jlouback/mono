@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import utils.SymmetryDetector;
+import foreignContributions.SymmetryDetector;
 
 public class Asymmetry {
 	

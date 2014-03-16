@@ -9,25 +9,44 @@ public class BorderIrregularity {
 	private ArrayList<Point> points;
 	private Point centroid;
 	private double meanRadius;
+	private double standardDeviation;
 	
 	public double returnIrregularityMetric(ArrayList<Point> border) {
 		this.points = border;
 		findCentroid();
 		findMeanRadius();
-		return radiiStandardDeviation();
+		return radiiCoefficientOfVariance();
 	}
-	
+
 	public void findCentroid() {
-		int xMean = 0;
-		int yMean = 0;
+//		int xMean = 0;
+//		int yMean = 0;
+//		for(int i=0; i<points.size(); i++) {
+//			xMean += points.get(i).getX();
+//			yMean += points.get(i).getY();
+//		}
+		int xMax = 0;
+		int xMin = points.get(0).getX();
+		int yMax = 0;
+		int yMin = points.get(0).getY();
 		for(int i=0; i<points.size(); i++) {
-			xMean += points.get(i).getX();
-			yMean += points.get(i).getY();
+			if(xMax<points.get(i).getX()){
+				xMax = points.get(i).getX();
+			}
+			if(xMin>points.get(i).getX()){
+				xMin = points.get(i).getX();
+			}
+			if(yMax<points.get(i).getY()){
+				yMax = points.get(i).getY();
+			}
+			if(yMin>points.get(i).getY()){
+				yMin = points.get(i).getY();
+			}
+			
 		}
-		xMean = xMean/points.size();
-		yMean = yMean/points.size();
-		centroid = new Point(xMean, yMean);
-		System.out.println("Centroid coord: " + xMean + " " + yMean);
+		int x = xMin + ((xMax - xMin)/2);
+		int y = yMin + ((yMax - yMin)/2);
+		centroid = new Point(x, y);
 	}
 	
 	public void findMeanRadius() {
@@ -40,10 +59,9 @@ public class BorderIrregularity {
 			sumRadius += Math.sqrt( Math.pow(x - centroid.getX(), 2) + Math.pow(y - centroid.getY(), 2)); 
 		}
 		meanRadius = sumRadius/points.size();
-		System.out.println(meanRadius);
 	}
 	
-	public double radiiStandardDeviation() {
+	public double radiiCoefficientOfVariance() {
 		int x = 0;
 		int y = 0;
 		double distance;
@@ -55,7 +73,8 @@ public class BorderIrregularity {
 			variance += Math.pow((distance - meanRadius), 2);
 		}
 		variance = variance/points.size();
-		return Math.sqrt(variance);
+		standardDeviation = Math.sqrt(variance);
+		return standardDeviation/meanRadius;
 	}
 	
 }
