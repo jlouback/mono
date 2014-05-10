@@ -405,10 +405,13 @@ public class SymmetryDetector {
         	y = drawString(observation, String.format("Max Radius: %3.1f", maxRadius), 5, y);
         	y = drawString(observation, String.format("Threshold: %1.2f", scoreThreshold), 5, y);
         	y = drawString(observation, String.format("Radii: %d", radiusCount), 5, y);
+        	drawString(observation, "Symmetry: " + symmetry.toString(), 5, height-25);
+        	System.out.println(symmetry.getAngles().length);
+        	
         	//TO fit in image
-        	String[] strings = symmetry.toString().split("\\[");
-        	String symmetry1 = strings[0];
-        	drawString(observation, "Symmetry: " + symmetry1, 5, height-25);
+        	//String[] strings = symmetry.toString().split("\\[");
+        	//String symmetry1 = strings[0];
+        	//drawString(observation, "Symmetry: " + symmetry1, 5, height-25);
         }
         
 		return symmetry;

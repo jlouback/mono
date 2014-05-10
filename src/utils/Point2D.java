@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
  * @author yuripourre
@@ -78,4 +81,11 @@ public class Point2D extends java.awt.geom.Point2D {
 		return angleInDegrees;
 	}
 	
+	public static List<Point2D> convertPoint2D(List<Point> points) {
+		List<Point2D> listPoint2D = new ArrayList<Point2D>();
+		for(Point point:points) {
+			listPoint2D.add(new Point2D(point.getX(),point.getY()));
+		}
+		return listPoint2D;
+	}
 }

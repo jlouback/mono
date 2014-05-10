@@ -21,10 +21,10 @@ public class AsymmetryTest {
 	//This is to visualize the effects of the algorithm
 	public static void main(String [] args) {
 		AsymmetryTest aT = new AsymmetryTest();
-		File file = new File("mole.jpg");
+		File file = new File("nevus.jpg");
 		CannyEdgeDetector detector = new CannyEdgeDetector();
-		detector.setLowThreshold(2f);
-		detector.setHighThreshold(9f);
+		detector.setLowThreshold(5f);
+		detector.setHighThreshold(12f);
 		try {
 			detector.setSourceImage(ImageIO.read(file));
 		} catch (IOException e) {
@@ -32,6 +32,15 @@ public class AsymmetryTest {
 			e.printStackTrace();
 		}
 		detector.process();
+		
+		BufferedImage edgeIm = detector.getEdgesImage();
+		try {
+			ImageIO.write(edgeIm, "png", new File("edges.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		QuickHullModifier quickHull = new QuickHullModifier();
 		List<Point2D> points = aT.convertPointToPoint2D(detector.getBorderCoordinates());
 		List<Point2D> convexHull = quickHull.quickHull(points);
@@ -59,7 +68,7 @@ public class AsymmetryTest {
 		g.drawPolygon(polygon);
 		g.fillPolygon(polygon);
 		g.dispose();
-		File processed = new File("quickHull.png");
+		File processed = new File("quickHull2.png");
 		try {
 			ImageIO.write(bImage, "png", processed);
 		} catch (IOException e) {
@@ -67,7 +76,7 @@ public class AsymmetryTest {
 			e.printStackTrace();
 		}
 		
-		aT.runSymmetryDetector("quickHull.png");
+		aT.runSymmetryDetector("quickHull2.png");
 		g2.dispose();
 		BufferedImage original = detector.getSourceImage();
 		BufferedImage combined = new BufferedImage(detector.getEdgesImage().getWidth(), detector.getEdgesImage().getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -75,7 +84,7 @@ public class AsymmetryTest {
 		
 		g3.drawImage(original, 0, 0, null);
 		g3.drawImage(bImage2, 0, 0, null);
-			File processed2 = new File("polygon.png");
+			File processed2 = new File("polygon2.png");
 			try {
 				ImageIO.write(combined, "png", processed2);
 			} catch (IOException e) {
@@ -109,12 +118,12 @@ public class AsymmetryTest {
 		//optionally adjust parameters here
 		detector.setScoreThreshold(0.9f);
 		//strictly optional: observe the algorithm running
-		BufferedImage obs = new BufferedImage(250, 200, BufferedImage.TYPE_INT_RGB);
+		BufferedImage obs = new BufferedImage(800, 800, BufferedImage.TYPE_INT_RGB);
 		detector.setObservation(obs.createGraphics());
 		//run the detector - symmetries are available from the returned object
 		SymmetryDetector.Symmetry symmetry = detector.detectSymmetry(image);
 		//the image obs will contain a graphical summary of execution
-		File processed = new File("assymetry3.png");
+		File processed = new File("assymetry2.png");
 		try {
 			ImageIO.write(obs, "png", processed);
 		} catch (IOException e) {
