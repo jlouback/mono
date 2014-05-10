@@ -19,12 +19,6 @@ public class BorderIrregularity {
 	}
 
 	public void findCentroid() {
-//		int xMean = 0;
-//		int yMean = 0;
-//		for(int i=0; i<points.size(); i++) {
-//			xMean += points.get(i).getX();
-//			yMean += points.get(i).getY();
-//		}
 		int xMax = 0;
 		int xMin = points.get(0).getX();
 		int yMax = 0;

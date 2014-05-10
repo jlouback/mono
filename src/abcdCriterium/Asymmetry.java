@@ -10,17 +10,18 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import br.com.etyllica.linear.Point2D;
+import utils.PointListHelper;
+import br.com.etyllica.motion.modifier.QuickHullModifier;
 import utils.Point;
-import utils.Point2D;
 import foreignContributions.CannyEdgeDetector;
-import foreignContributions.QuickHullModifier;
 import foreignContributions.SymmetryDetector;
 
 public class Asymmetry {
 	
 	public static void main(String[] args) throws IOException {
 		Asymmetry ass = new Asymmetry();
-		System.out.println(ass.returnAsymmetryMetric("nevus.jpg"));
+		System.out.println(ass.returnAsymmetryMetric("N1343_RU.jpg"));
 	}
 
 
@@ -51,7 +52,7 @@ public class Asymmetry {
 		//Create polygon encapsulating lesion border points with Pourre's quick hull algorithm
 		QuickHullModifier quickHull = new QuickHullModifier();
 		//Pourre's quick hull algorithm uses custom class Point2D
-		List<Point2D> point2D = Point2D.convertPoint2D(getEdgeCoordinates(filename));
+		List<Point2D> point2D = PointListHelper.convertPoint2D(getEdgeCoordinates(filename));
 		List<Point2D> convexHull = quickHull.quickHull(point2D);
 		//Draw polygon image to be used in symmetry detector
 		BufferedImage polygonImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);

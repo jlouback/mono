@@ -12,8 +12,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import br.com.etyllica.linear.Point2D;
+import br.com.etyllica.motion.modifier.QuickHullModifier;
 import foreignContributions.CannyEdgeDetector;
-import foreignContributions.QuickHullModifier;
 import foreignContributions.SymmetryDetector;
 
 public class AsymmetryTest {
@@ -21,7 +22,7 @@ public class AsymmetryTest {
 	//This is to visualize the effects of the algorithm
 	public static void main(String [] args) {
 		AsymmetryTest aT = new AsymmetryTest();
-		File file = new File("nevus.jpg");
+		File file = new File("N1343_RU.jpg");
 		CannyEdgeDetector detector = new CannyEdgeDetector();
 		detector.setLowThreshold(5f);
 		detector.setHighThreshold(12f);
