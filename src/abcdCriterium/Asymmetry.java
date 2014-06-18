@@ -20,27 +20,23 @@ import foreignContributions.SymmetryDetector;
 public class Asymmetry {
 	
 	public static void main(String[] args) throws IOException {
-		Asymmetry ass = new Asymmetry();
-		System.out.println(ass.returnAsymmetryMetric("N1343_RU.jpg"));
+		Asymmetry as = new Asymmetry();
+		as.returnAsymmetryMetric("/Users/julianalouback/Desktop/Mono/Mono/Nevi/N13_JL.jpg");
 	}
 
 
 	public int returnAsymmetryMetric(String filename) throws IOException {
-	
 			//Get name of image with polygon representing lesion area
 			String polygonImage = runQuickHull(filename);
 			File file = new File(polygonImage);
-			
 			// Run symmetry detector on image of polygon
 			//create the detector
 			SymmetryDetector detector = new SymmetryDetector();
 			detector.setScoreThreshold(0.9f);
 			//run the detector - symmetries are available from the returned object
 			SymmetryDetector.Symmetry symmetry = detector.detectSymmetry(ImageIO.read(file));
-			
 			//Delete generated polygon Image
 			file.delete();
-			
 			//The asymetry metric is the number of symmetries found.
 			int asymmetryMetric = symmetry.getAngles().length;
 			return asymmetryMetric;
@@ -84,8 +80,8 @@ public class Asymmetry {
 	public List<Point> getEdgeCoordinates(String filename) {
 		//Get edges of image
 		CannyEdgeDetector edgeDetector = new CannyEdgeDetector();
-		edgeDetector.setLowThreshold(5f);
-		edgeDetector.setHighThreshold(12f);
+		edgeDetector.setLowThreshold(6f);
+		edgeDetector.setHighThreshold(13f);
 		try {
 			edgeDetector.setSourceImage(ImageIO.read(new File(filename)));
 		} catch (IOException e) {
@@ -93,6 +89,11 @@ public class Asymmetry {
 			e.printStackTrace();
 		}
 		edgeDetector.process();
+		if(edgeDetector.getBorderCoordinates().size() < 3) {
+			edgeDetector.setLowThreshold(2f);
+			edgeDetector.setHighThreshold(8f);
+			edgeDetector.process();
+		}
 		return edgeDetector.getBorderCoordinates();
 	}
 

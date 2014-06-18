@@ -5,8 +5,13 @@ function runStauntonMa(directory, flag)
   #Get list of images to be processed
   files = readdir(directory);
   
+  [row, column] = size(files);
+  disp(row);
+  disp(column);
+  
   #Run the StauntonMa algorithm on every file in directory specified
-  for i=4:6
+  #starts on 3 to skip Mac OSX config files
+  for i=3:row
     filepath = strcat(directory,'/',files{i});
     stauntonMa(filepath, flag);
   endfor

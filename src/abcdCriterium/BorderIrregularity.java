@@ -1,7 +1,12 @@
 package abcdCriterium;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+
+import foreignContributions.CannyEdgeDetector;
 import utils.Point;
 
 public class BorderIrregularity {
@@ -11,11 +16,31 @@ public class BorderIrregularity {
 	private double meanRadius;
 	private double standardDeviation;
 	
-	public double returnIrregularityMetric(ArrayList<Point> border) {
-		this.points = border;
+	public double returnIrregularityMetric(String image) {
+		File imageFile = new File(image);
+		this.points = returnBorderCoordinates(imageFile);
 		findCentroid();
 		findMeanRadius();
 		return radiiCoefficientOfVariance();
+	}
+	
+	public static ArrayList<Point> returnBorderCoordinates(File image) {
+		CannyEdgeDetector detector = new CannyEdgeDetector();
+		detector.setLowThreshold(6f);
+		detector.setHighThreshold(13f);
+		try {
+			detector.setSourceImage(ImageIO.read(image));
+		} catch (IOException e) {
+			System.out.println("Image not found.");
+			e.printStackTrace();
+		}
+		detector.process();
+		if(detector.getBorderCoordinates().size() < 3) {
+			detector.setLowThreshold(2f);
+			detector.setHighThreshold(8f);
+			detector.process();
+		}
+		return detector.getBorderCoordinates();
 	}
 
 	public void findCentroid() {

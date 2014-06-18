@@ -3,7 +3,7 @@ function stauntonMa(filepath, flag)
   printf(filepath);
   printf("\n");
 
-  csvFilname = "csv_data.csv";
+  csvFilname = "csv_data_FinalAdd.csv";
   
   # Obtain contour signature - See section 2.1
   Cr = lesionRadii(filepath);

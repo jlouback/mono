@@ -28,10 +28,8 @@ public class ColorChange {
 	public double returnColorChangeMetric(String filename) throws IOException {
 		//Load the image to be analyzed
 		BufferedImage bImage = ImageIO.read(new File(filename));
-
 		//Separate lesion pixels from image:
 		List<Point2D> lesion = getLesion(bImage);
-
 		//Get average Delta E
 		return getAvgDeltaE(lesion, bImage);
 	}
@@ -52,10 +50,15 @@ public class ColorChange {
 	public List<Point> getEdgeCoordinates(BufferedImage image) {
 		//Get edges of image
 		CannyEdgeDetector edgeDetector = new CannyEdgeDetector();
-		edgeDetector.setLowThreshold(5f);
-		edgeDetector.setHighThreshold(12f);
+		edgeDetector.setLowThreshold(6f);
+		edgeDetector.setHighThreshold(13f);
 		edgeDetector.setSourceImage(image);
 		edgeDetector.process();
+		if(edgeDetector.getBorderCoordinates().size() < 3) {
+			edgeDetector.setLowThreshold(2f);
+			edgeDetector.setHighThreshold(8f);
+			edgeDetector.process();
+		}
 		return edgeDetector.getBorderCoordinates();
 	}
 
