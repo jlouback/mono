@@ -1,5 +1,7 @@
+#Dermatologic Diagnosis through Computer Vision and Pattern Recognition
 
-This is the code and monograph of my final project, a requirement to complete my Bachelor’s in Information Systems at the Federal University of the State of Rio de Janeiro. The project is entitled Dermatologic Diagnosis through Computer Vision and Pattern recognition, developed under the mentorship of Sean Wolfgand Matsui Siqueira Ph.D.
+
+This is the code, data and monograph of my final project, a requirement to complete my Bachelor’s in Information Systems at the Federal University of the State of Rio de Janeiro. The project is entitled Dermatologic Diagnosis through Computer Vision and Pattern recognition, developed under the mentorship of Sean Wolfgand Matsui Siqueira Ph.D.
 
 The objective is to measure the efficacy of a selection of image analysis algorithms that aim to detect malignant melanomas in images of skin lesions.
 
